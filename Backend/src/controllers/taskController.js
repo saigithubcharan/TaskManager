@@ -9,7 +9,18 @@ exports.createTask = async (req, res) => {
       status,
       dueDate
     } = req.body;
+const existingTask = await Task.findOne({
+  userId: req.user._id,
+  title: title.trim(),
+  description: description?.trim(),
+});
 
+if (existingTask) {
+  return res.status(400).json({
+    success: false,
+    message: "Task already exists",
+  });
+}
     const task = await Task.create({
       title,
       description,
