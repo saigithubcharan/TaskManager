@@ -1,3 +1,5 @@
+
+
 const Task = require("../models/Task");
 
 exports.getDashboardStats = async (req, res) => {
@@ -5,29 +7,54 @@ exports.getDashboardStats = async (req, res) => {
     const userId = req.user._id;
 
     const totalTasks = await Task.countDocuments({
-      userId
+      userId,
     });
 
     const todo = await Task.countDocuments({
       userId,
-      status: "To Do"
+      status: "To Do",
     });
 
-    const inProgress = await Task.countDocuments({
-      userId,
-      status: "In Progress"
-    });
+    const inProgress =
+      await Task.countDocuments({
+        userId,
+        status: "In Progress",
+      });
 
-    const done = await Task.countDocuments({
-      userId,
-      status: "Done"
-    });
+    const done =
+      await Task.countDocuments({
+        userId,
+        status: "Done",
+      });
 
-    const overdue = await Task.countDocuments({
-      userId,
-      dueDate: { $lt: new Date() },
-      status: { $ne: "Done" }
-    });
+    const overdue =
+      await Task.countDocuments({
+        userId,
+        dueDate: {
+          $lt: new Date(),
+        },
+        status: {
+          $ne: "Done",
+        },
+      });
+
+    const lowPriority =
+      await Task.countDocuments({
+        userId,
+        priority: "Low",
+      });
+
+    const mediumPriority =
+      await Task.countDocuments({
+        userId,
+        priority: "Medium",
+      });
+
+    const highPriority =
+      await Task.countDocuments({
+        userId,
+        priority: "High",
+      });
 
     res.status(200).json({
       success: true,
@@ -36,13 +63,16 @@ exports.getDashboardStats = async (req, res) => {
         todo,
         inProgress,
         done,
-        overdue
-      }
+        overdue,
+        lowPriority,
+        mediumPriority,
+        highPriority,
+      },
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: error.message
+      message: error.message,
     });
   }
 };

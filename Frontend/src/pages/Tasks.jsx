@@ -6,6 +6,7 @@ import TaskForm from "../components/tasks/TaskForm";
 
 import TaskTable from "../components/tasks/TaskTable";
 import TaskModal from "../components/tasks/TaskModal";
+import TaskFilters from "../components/tasks/TaskFilters";
 
 import {
   getTasks,
@@ -18,25 +19,36 @@ const Tasks = () => {
   const [tasks, setTasks] = useState([]);
 const [selectedTask, setSelectedTask] =
   useState(null);
+  const [search, setSearch] =
+  useState("");
+
+const [status, setStatus] =
+  useState("");
+
+const [priority, setPriority] =
+  useState("");
 
 const [isModalOpen, setIsModalOpen] =
   useState(false);
 
   useEffect(() => {
     loadTasks();
-  }, []);
+  }, [search, status, priority]);
 
-  const loadTasks = async () => {
-    try {
-      const response =
-        await getTasks();
+const loadTasks = async () => {
+  try {
+    const response =
+      await getTasks({
+        search,
+        status,
+        priority,
+      });
 
-      setTasks(response.tasks);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+    setTasks(response.tasks);
+  } catch (error) {
+    console.log(error);
+  }
+};
 const handleCreateTask = async (data) => {
   try {
     const existingTask = tasks.find(
@@ -152,6 +164,14 @@ const handleEditTask =
           />
         </div>
 
+<TaskFilters
+  search={search}
+  setSearch={setSearch}
+  status={status}
+  setStatus={setStatus}
+  priority={priority}
+  setPriority={setPriority}
+/>
         <TaskTable
          tasks={tasks} 
          onDelete={handleDeleteTask}

@@ -5,6 +5,8 @@ import Layout from "../components/layout/Layout";
 import StatsCard from "../components/dashboard/StatsCard";
 
 import { getDashboardStats } from "../services/dashboardService";
+import StatusPieChart from "../components/dashboard/StatusPieChart";
+import PriorityBarChart from "../components/dashboard/PriorityBarChart";
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
@@ -23,7 +25,44 @@ const Dashboard = () => {
       console.log(error);
     }
   };
+const statusData = [
+  {
+    name: "To Do",
+    value: stats?.todo || 0,
+  },
+  {
+    name: "In Progress",
+    value:
+      stats?.inProgress || 0,
+  },
+  {
+    name: "Done",
+    value: stats?.done || 0,
+  },
+  {
+    name: "Overdue",
+    value: stats?.overdue || 0,
+  },
+];
 
+const priorityData = [
+  {
+    name: "Low",
+    value:
+      stats?.lowPriority || 0,
+  },
+  {
+    name: "Medium",
+    value:
+      stats?.mediumPriority ||
+      0,
+  },
+  {
+    name: "High",
+    value:
+      stats?.highPriority || 0,
+  },
+];
   return (
     <Layout>
       <div className="mb-8">
@@ -67,6 +106,15 @@ const Dashboard = () => {
           color="text-red-600"
         />
       </div>
+      <div className="grid gap-6 lg:grid-cols-2 mt-8">
+  <StatusPieChart
+    data={statusData}
+  />
+
+  <PriorityBarChart
+    data={priorityData}
+  />
+</div>
     </Layout>
   );
 };
