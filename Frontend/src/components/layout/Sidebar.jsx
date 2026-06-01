@@ -12,7 +12,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="w-64 bg-slate-900 text-white h-[calc(100vh-64px)] p-5">
+    <aside className="w-64 bg-slate-900 text-white h-screen p-5">
       <nav className="space-y-3">
         <NavLink
           to="/"

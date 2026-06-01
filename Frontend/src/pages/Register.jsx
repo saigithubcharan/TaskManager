@@ -90,9 +90,15 @@ const Register = () => {
                   type="text"
                   placeholder="Enter name"
                   className="w-full border rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  {...register("name", {
-                    required: "Name is required",
-                  })}
+                {...register("name", {
+  required: "Name is required",
+  minLength: {
+    value: 3,
+    message:
+      "Name must be at least 3 characters",
+  },
+})}
+
                 />
               </div>
 
@@ -118,8 +124,14 @@ const Register = () => {
                   placeholder="Enter email"
                   className="w-full border rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   {...register("email", {
-                    required: "Email is required",
-                  })}
+  required: "Email is required",
+  pattern: {
+    value:
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    message:
+      "Enter a valid email",
+  },
+})}
                 />
               </div>
 

@@ -9,6 +9,14 @@ exports.getDashboardStats = async (req, res) => {
     const totalTasks = await Task.countDocuments({
       userId,
     });
+    const recentTasks = await Task.find({
+  userId,
+})
+  .sort({ createdAt: -1 })
+  .limit(5)
+  .select(
+    "title status priority dueDate"
+  );
 
     const todo = await Task.countDocuments({
       userId,
@@ -67,6 +75,7 @@ exports.getDashboardStats = async (req, res) => {
         lowPriority,
         mediumPriority,
         highPriority,
+        recentTasks
       },
     });
   } catch (error) {

@@ -17,6 +17,8 @@ import {
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
+  const [sortBy, setSortBy] =
+  useState("");
 const [selectedTask, setSelectedTask] =
   useState(null);
   const [search, setSearch] =
@@ -33,7 +35,7 @@ const [isModalOpen, setIsModalOpen] =
 
   useEffect(() => {
     loadTasks();
-  }, [search, status, priority]);
+  }, [search, status, priority,sortBy]);
 
 const loadTasks = async () => {
   try {
@@ -42,6 +44,7 @@ const loadTasks = async () => {
         search,
         status,
         priority,
+        sortBy
       });
 
     setTasks(response.tasks);
@@ -171,6 +174,8 @@ const handleEditTask =
   setStatus={setStatus}
   priority={priority}
   setPriority={setPriority}
+  sortBy={sortBy}
+  setSortBy={setSortBy}
 />
         <TaskTable
          tasks={tasks} 

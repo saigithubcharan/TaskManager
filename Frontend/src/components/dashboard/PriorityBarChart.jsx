@@ -18,7 +18,7 @@ const PriorityBarChart = ({
 
       <ResponsiveContainer
         width="100%"
-        height="100%"
+        height="94%"
       >
         <BarChart data={data}>
           <XAxis dataKey="name" />

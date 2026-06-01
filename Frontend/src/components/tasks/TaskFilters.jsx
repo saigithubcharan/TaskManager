@@ -5,6 +5,8 @@ const TaskFilters = ({
   setStatus,
   priority,
   setPriority,
+sortBy,
+setSortBy,
 }) => {
   return (
     <div className="bg-white p-4 rounded-xl shadow flex flex-col md:flex-row gap-4">
@@ -17,7 +19,25 @@ const TaskFilters = ({
         }
         className="flex-1 border rounded-lg p-3"
       />
+     <select
+  value={sortBy}
+  onChange={(e) =>
+    setSortBy(e.target.value)
+  }
+  className="border rounded-lg p-3"
+>
+  <option value="">
+    Sort By
+  </option>
 
+  <option value="dueDate">
+    Due Date
+  </option>
+
+  <option value="createdAt">
+    Latest Created
+  </option>
+</select>
       <select
         value={status}
         onChange={(e) =>
@@ -59,6 +79,7 @@ const TaskFilters = ({
           High
         </option>
       </select>
+ 
     </div>
   );
 };

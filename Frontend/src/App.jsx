@@ -6,8 +6,35 @@ import Dashboard from "./pages/Dashboard";
 import Tasks from "./pages/Tasks";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
+import { useEffect } from "react";
+import useAuthStore from "./store/authStore";
+import { getProfile } from "./services/authService";
 
 function App() {
+  const setUser = useAuthStore(
+  (state) => state.setUser
+);
+
+const token = useAuthStore(
+  (state) => state.token
+);
+
+useEffect(() => {
+  const fetchUser = async () => {
+    try {
+      if (!token) return;
+
+      const response =
+        await getProfile();
+
+      setUser(response.user);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchUser();
+}, [token, setUser]);
   return (
     <BrowserRouter>
       <Routes>

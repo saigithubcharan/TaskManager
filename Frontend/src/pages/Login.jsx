@@ -83,9 +83,15 @@ const Login = () => {
                   type="email"
                   placeholder="Enter email"
                   className="w-full border rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  {...register("email", {
-                    required: "Email is required",
-                  })}
+                 {...register("email", {
+  required: "Email is required",
+  pattern: {
+    value:
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    message:
+      "Enter a valid email",
+  },
+})}
                 />
               </div>
 
@@ -108,9 +114,14 @@ const Login = () => {
                   type="password"
                   placeholder="Enter password"
                   className="w-full border rounded-xl pl-10 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  {...register("password", {
-                    required: "Password is required",
-                  })}
+                 {...register("password", {
+  required: "Password is required",
+  minLength: {
+    value: 6,
+    message:
+      "Password must be at least 6 characters",
+  },
+})}
                 />
               </div>
 

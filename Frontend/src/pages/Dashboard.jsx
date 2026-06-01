@@ -7,7 +7,7 @@ import StatsCard from "../components/dashboard/StatsCard";
 import { getDashboardStats } from "../services/dashboardService";
 import StatusPieChart from "../components/dashboard/StatusPieChart";
 import PriorityBarChart from "../components/dashboard/PriorityBarChart";
-
+import RecentTasks from "../components/dashboard/RecentTasks";
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
 
@@ -114,7 +114,15 @@ const priorityData = [
   <PriorityBarChart
     data={priorityData}
   />
+  
 </div>
+<div className="mt-8">
+  <RecentTasks
+    tasks={
+      stats?.recentTasks || []
+    }
+  />
+</div> 
     </Layout>
   );
 };

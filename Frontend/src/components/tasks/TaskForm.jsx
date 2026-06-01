@@ -9,6 +9,7 @@ const TaskForm = ({ onSubmit }) => {
     register,
     handleSubmit,
     reset,
+    formState: { errors },
   } = useForm({
     defaultValues: {
       priority: "Medium",
@@ -37,16 +38,40 @@ const TaskForm = ({ onSubmit }) => {
       className="grid gap-4"
     >
       <input
-        placeholder="Task Title"
-        className="border p-3 rounded-lg"
-        {...register("title")}
-      />
+  placeholder="Task Title"
+  className="border p-3 rounded-lg"
+  {...register("title", {
+    required: "Title is required",
+    minLength: {
+      value: 3,
+      message:
+        "Title must be at least 3 characters",
+    },
+  })}
+/>
+{errors.title && (
+  <p className="text-red-500 text-sm">
+    {errors.title.message}
+  </p>
+)}
 
       <textarea
-        placeholder="Description"
-        className="border p-3 rounded-lg"
-        {...register("description")}
-      />
+  placeholder="Description"
+  className="border p-3 rounded-lg w-full"
+  {...register("description", {
+    maxLength: {
+      value: 500,
+      message:
+        "Description cannot exceed 500 characters",
+    },
+  })}
+/>
+
+{errors.description && (
+  <p className="text-red-500 text-sm mt-1">
+    {errors.description.message}
+  </p>
+)}
 
       <select
         className="border p-3 rounded-lg"
